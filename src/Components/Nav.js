@@ -1,7 +1,7 @@
 
 import {Link} from 'react-router-dom'
 
-export default function Nav({tools}) {
+export default function Nav({choices}) {
   return (
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
   <div className="container-fluid">
@@ -36,7 +36,7 @@ export default function Nav({tools}) {
     <div className="d-flex align-items-center">
       <Link className="text-reset me-3" to="/box">
         <i className="fas fa-shopping-cart"></i>
-        <span className="badge rounded-pill badge-notification bg-danger">{tools.length}</span>
+        <span className="badge rounded-pill badge-notification bg-danger">{choices ? choices.length : "0"}</span>
       </Link>
 
       <div className="dropdown">

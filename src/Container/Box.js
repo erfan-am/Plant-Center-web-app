@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
 
-const Box = ({tools,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
+const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
  useEffect(()=>{
-    tools.length ==0 && navigate('/shop')
- },[tools])
- console.log(tools);
+    choices.length ==0 && navigate('/shop')
+ },[choices])
+ console.log(choices);
   return (
     <div className='container'>
       <div className="row">
@@ -27,7 +27,7 @@ const Box = ({tools,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
             </tr>
         </thead>
         <tbody>
-           {tools.map(tool=>(
+           {choices.map(tool=>(
              <tr key={Math.random()}>
              <th className='h3' scope="row">{i++}</th>
              <td className='h3'><img width={50} src={tool.image} alt={tool.name+"09"} /></td>
@@ -37,14 +37,14 @@ const Box = ({tools,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
              <button onClick={()=>addQuantity(tool)} 
              className=' btn text-success'>+</button></td>
              <td className='h3'>{tool.price}</td>
-             <td className='h3'><button onClick={()=>removeItem(tool)} className='btn'>X</button></td>
+             <td className='h3'><button onClick={()=>removeItem(tool.id)} className='btn'>X</button></td>
              </tr>
            ))}
         </tbody>
         </table>
 
 
-        { tools.length !==0 && <button onClick={()=>onPay()} className="btn btn-primary">Go To Pay</button>}
+        { choices.length !==0 && <button onClick={()=>onPay()} className="btn btn-primary">Go To Pay</button>}
     </div>
   )
 }
