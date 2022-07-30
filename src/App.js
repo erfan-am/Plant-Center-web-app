@@ -1,6 +1,9 @@
 import './App.css';
 import Nav from './Components/Nav';
 import { Routes,Route,useNavigate} from 'react-router-dom'
+import {useSelector,useDispatch} from 'react-redux'
+import {syncData} from './redux/posts/PostsReducer'
+
 import Home from './Container/Home';
 import Shop from './Container/Shop';
 import Details from './Container/Details';
@@ -13,6 +16,14 @@ function App() {
   const [totalPrices,setTotalPrice]=useState(0)
   const [user,setUser]=useState(true)
   const navigate=useNavigate()
+  const {data}=useSelector(state=>state.posts)
+
+  
+const dispatch=useDispatch()
+
+useEffect(()=>{
+  dispatch(syncData())
+},[])
 useEffect(()=>{
   setTotalPrice(0)
   for (let i in tools){
@@ -21,12 +32,13 @@ useEffect(()=>{
   },[tools])
   console.log(tools);
   console.log(totalPrices);
+  console.log(data);
  
   const addTools=(item)=>{
     if(tools.find(it=>it.name === item.name)){
       return tools
     }
-    setTools([...tools,{name:item.name,price:item.price,img:item.img,quantity:1}])
+    setTools([...tools,{name:item.name,price:item.price,image:item.image,quantity:1}])
   }
   const removeItem=(item)=>{
     setTools(tools =>
@@ -65,13 +77,12 @@ useEffect(()=>{
     <div className="">
     <Nav tools={tools}/>
       <Routes>
-
-        <Route path='/' element={<Home/>} />
-        <Route path='/shop' element={<Shop  addTools={addTools} />} />
-        <Route path='/shop/:name' element={<Shop addTools={addTools} />} />
+        <Route path='/' element={<Home data={data}/>} />
+        <Route path='/shop' element={<Shop data={data}  addTools={addTools} />} />
+        <Route path='/shop/:name' element={<Shop data={data} addTools={addTools} />} />
         <Route path='/authentication/login' element={<Login />} />
         <Route path='/authentication/signup' element={<Singup />} />
-        <Route path='/shop/seeDetails/:name' element={<Details addTools={addTools} />} />
+        <Route path='/shop/seeDetails/:name' element={<Details data={data} addTools={addTools} />} />
         <Route path='/box' element={<Box onPay={onPay} decQuantity={decQuantity} addQuantity={addQuantity} totalPrices={totalPrices} tools={tools} removeItem={removeItem} />} />
       </Routes>
     </div>

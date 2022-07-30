@@ -30,7 +30,7 @@ const Box = ({tools,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
            {tools.map(tool=>(
              <tr key={Math.random()}>
              <th className='h3' scope="row">{i++}</th>
-             <td className='h3'><img width={50} src={tool.img} alt={tool.name+"09"} /></td>
+             <td className='h3'><img width={50} src={tool.image} alt={tool.name+"09"} /></td>
              <td className='h3'><Link to={`/shop/seeDetails/${tool.name}`}>{tool.name}</Link></td>
              <td className='h3'><button onClick={()=> decQuantity(tool)} className='text-danger btn'>-</button> 
              <h4 className='d-inline'>{tool.quantity}</h4> 

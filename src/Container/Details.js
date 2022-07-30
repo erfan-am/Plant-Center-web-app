@@ -1,7 +1,6 @@
 import React from 'react'
 import {useLocation,Link} from 'react-router-dom'
-import { data } from './data'
-const Details = ({addTools}) => {
+const Details = ({addTools,data}) => {
     const param=useLocation().pathname
     const include=param.split('/shop/seeDetails/')
     const item=data.map(item=>item.items.find(item=>item.name == include[1])).filter(item=>item !==undefined)[0]
@@ -11,7 +10,7 @@ const Details = ({addTools}) => {
         <h1>See Details</h1>
         <div className="row">
             <div className="col-lg-6">
-                <img src={item.img} style={{width:'100%',height:'450px'}} alt={item.name+ "w"} />
+                <img src={item.image} style={{width:'100%',height:'450px'}} alt={item.name+ "w"} />
             </div>
             <div className="col">
                 <ul className='list-group p-4'>
