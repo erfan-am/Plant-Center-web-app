@@ -1,15 +1,16 @@
 import {Link} from 'react-router-dom'
 import { useFormik } from 'formik';
+import  axiosInstance  from '../axios';
 
 const Login = () => {
    
-      
+
 const validate = values => {
     const errors = {};
-    if (!values.username) {
-      errors.username = 'Required';
-    } else if (values.username.length > 15) {
-      errors.username = 'Must be 15 characters or less';
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
     }
     if (!values.password) {
         errors.password = 'Required';
@@ -21,7 +22,7 @@ const validate = values => {
   };
   const formik = useFormik({
     initialValues: {
-      username: '',
+      email: '',
       password: ''
     },
     validate,
@@ -29,22 +30,38 @@ const validate = values => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+
+  const handleData=()=>{
+    axiosInstance
+    .post('token/',{
+      email:formik.values.email,
+      password:formik.values.password,
+    })
+    .then((res) => {
+      localStorage.setItem('access_token', res.data.access);
+      localStorage.setItem('refresh_token', res.data.refresh);
+      axiosInstance.defaults.headers['Authorization'] =
+        'JWT ' + localStorage.getItem('access_token');
+        console.log(res);
+    })
+  }
   return (
     <div className='container'>
       <div className="row p-2 mt-3">
         <div className="col">
         <form onSubmit={formik.handleSubmit}>
         <div className="mb-3">
-        <label htmlFor="username" className={formik.errors.username && `text-danger`}>Username</label>
+        <label htmlFor="email" className={formik.errors.email && `text-danger`}>Email</label>
             <input
                 className='form-control'
-                id="username"
-                name="username"
+                id="email"
+                name="email"
                 type="text"
                 onChange={formik.handleChange}
-                value={formik.values.username}
+                value={formik.values.email}
             />
-             {formik.errors.username ? <div>{formik.errors.username}</div> : null}
+             {formik.errors.email ? <div>{formik.errors.email}</div> : null}
         </div>
         <div className="mb-3">
         <label htmlFor="email" className={formik.errors.password && `text-danger`}>Password</label>
@@ -58,11 +75,11 @@ const validate = values => {
         />
         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
         </div>
-            <div className="mb-3">
-                <input type="submit"className="form-control" value="Sign up" />
-            </div>
+          
         </form>
-
+        <div className="mb-3">
+                <input onClick={handleData} type="submit"className="form-control" value="Sign up" />
+            </div>
         <h3>if you haven't any account please click <Link 
         to="/authentication/signup"
         className='h3 text-primary'>here</Link> </h3>

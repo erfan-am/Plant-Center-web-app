@@ -1,105 +1,69 @@
+import React from 'react'
 
-import {Link} from 'react-router-dom'
-
-export default function Nav({choices}) {
+export default function Nav(){
   return (
-<nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <div className="container-fluid">
-    <button
-      className="navbar-toggler"
-      type="button"
-      data-mdb-toggle="collapse"
-      data-mdb-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <i className="fas fa-bars"></i>
-    </button>
-
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <Link className="navbar-brand mt-2 mt-lg-0" to="#">
-      <h1>Plants Center</h1>
-      </Link>
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item h5">
-          <Link className="nav-link" to="/">Home</Link>
+    <>
+        <nav className="navbarr">
+      <div className="logo">
+        <a className="logo_text" href="#">
+          <img src="https://raw.githubusercontent.com/yesidacosta/web-navbars/main/navbar-two-row/img/logo.png" alt="NeosPizza"/>
+        </a>
+      </div>
+      <ul className="menu">
+        <li className="menu_item">
+          <a href="" className="menu_link">Ordene</a>
         </li>
-        <li className="nav-item h5">
-          <Link className="nav-link" to="/shop">Shop</Link>
+        <li className="menu_item">
+          <a href="" className="menu_link">Sucursales</a>
         </li>
-        <li className="nav-item h5">
-          <Link className="nav-link" to="/about-us">About Us</Link>
+        <li className="menu_item">
+          <a href="" className="menu_link">Sobre nosotros</a>
+        </li>
+        <li className="menu_item">
+          <a href="" className="menu_link">Contacto</a>
         </li>
       </ul>
-    </div>
-    <div className="d-flex align-items-center">
-      <Link className="text-reset me-3" to="/box">
-        <i className="fas fa-shopping-cart"></i>
-        <span className="badge rounded-pill badge-notification bg-danger">{choices ? choices.length : "0"}</span>
-      </Link>
 
-      <div className="dropdown">
-        <Link
-          className="text-reset me-3 dropdown-toggle hidden-arrow"
-          to="#"
-          id="navbarDropdownMenuLink"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <i className="fas fa-bell"></i>
-          <span className="badge rounded-pill badge-notification bg-danger">1</span>
-        </Link>
-        <ul
-          className="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuLink"
-        >
-          <li>
-            <Link className="dropdown-item h5" to="#">Some news</Link>
+      <div className="phone">
+        <span className="phone_order">Pedidos al número</span>
+        <span className="phone_number">777-888-2323</span>
+      </div>
+
+      <div className="login">
+        <a className="login_link login_link--button" href="#">Login</a>
+        <a className="login_link" href="#">Signup</a>
+      </div>
+
+      <div className="btn_pizza fas fa-pizza-slice"></div>
+      <div className="btn_login fas fa-user"></div>
+      <div className="btn_menu fas fa-bars"></div>
+    </nav>
+    <section className="pizza-fast">
+      <div className="col-full">
+        <ul className="pizza_list">
+          <li className="pizza_item">
+            <i className="fas fa-pizza-slice"></i>
+            <a className="pizza_link" href="#">Porción</a>
           </li>
-          <li>
-            <Link className="dropdown-item h5" to="#">Another news</Link>
+          <li className="pizza_item">
+            <img src="https://raw.githubusercontent.com/yesidacosta/web-navbars/main/navbar-two-row/img/pizza_2.svg" alt="" width="32"/>
+            <a className="pizza_link" href="#">Pizza</a>
           </li>
-          <li>
-            <Link className="dropdown-item h5" to="#">Something else here</Link>
+          <li className="pizza_item">
+            <i><img src="https://raw.githubusercontent.com/yesidacosta/web-navbars/main/navbar-two-row/img/pizza_3.svg" alt="" width="32"/></i>
+            <a className="pizza_link" href="#">Familiar</a>
+          </li>
+          <li className="pizza_item">
+            <i><img src="https://raw.githubusercontent.com/yesidacosta/web-navbars/main/navbar-two-row/img/pizza_5.svg" alt="" width="32"/></i>
+            <a className="pizza_link" href="#">Frituras</a>
+          </li>
+          <li className="pizza_item">
+            <i><img src="https://raw.githubusercontent.com/yesidacosta/web-navbars/main/navbar-two-row/img/pizza_6.svg" alt="" width="40"/></i>
+            <a className="pizza_link" href="#">Combos</a>
           </li>
         </ul>
       </div>
-      <div className="dropdown">
-        <Link
-          className="dropdown-toggle d-flex align-items-center hidden-arrow"
-          to="#"
-          id="navbarDropdownMenuAvatar"
-          role="button"
-          data-mdb-toggle="dropdown"
-          aria-expanded="false"
-        >
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
-            className="rounded-circle"
-            height="25"
-            alt="Black and White Portrait of Link Man"
-            loading="lazy"
-          />
-        </Link>
-        <ul
-          className="dropdown-menu dropdown-menu-end"
-          aria-labelledby="navbarDropdownMenuAvatar"
-        >
-          <li>
-            <Link className="dropdown-item h5" to="#">My profile</Link>
-          </li>
-          <li>
-            <Link className="dropdown-item h5" to="#">Settings</Link>
-          </li>
-          <li>
-            <Link className="dropdown-item h5" to="#">Logout</Link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</nav>
+    </section>
+</>
   )
 }

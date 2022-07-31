@@ -1,14 +1,36 @@
 import {Link} from 'react-router-dom'
 import { useFormik } from 'formik';
+import  axiosInstance  from '../axios';
 
 const Signup = () => {
    
+   
+const createUser=()=>{
+  const {username,phone,email,location,password}=formik.values
+  axiosInstance
+  .post('user/register',{
+    email:email,
+    username:username,
+    phone:phone,
+    location:location,
+    password:password
+  }).then((res)=>{
+    console.log(res);
+    console.log(res.data);
+  })
+}
+console.log(localStorage.getItem('refresh_token'))
 const validate = values => {
     const errors = {};
     if (!values.username) {
       errors.username = 'Required';
     } else if (values.username.length > 15) {
       errors.username = 'Must be 15 characters or less';
+    }
+    if (!values.location) {
+      errors.location = 'Required';
+    } else if (values.location.length < 6) {
+      errors.location = 'Enter Valid Aaddress';
     }
   
     if (!values.phone) {
@@ -42,6 +64,7 @@ const validate = values => {
       email: '',
       password: '',
       confirm: '',
+      location:''
     },
     validate,
     onSubmit: values => {
@@ -52,7 +75,7 @@ const validate = values => {
     <div className='container'>
       <div className="row p-2 mt-3">
         <div className="col">
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.createUser}>
         <div className="mb-3">
         <label htmlFor="username" className={formik.errors.username && `text-danger`}>Username</label>
             <input
@@ -92,6 +115,17 @@ const validate = values => {
         {formik.errors.email ? <div>{formik.errors.email}</div> : null}
         </div>
         <div className="mb-3">
+        <label htmlFor="location" className={formik.errors.location && `text-danger`}>location</label>
+        <textarea
+            className='form-control'
+            id="location"
+            name="location"
+            onChange={formik.handleChange}
+            value={formik.values.location}
+        />
+        {formik.errors.location ? <div>{formik.errors.location}</div> : null}
+        </div>
+        <div className="mb-3">
         <label htmlFor="email" className={formik.errors.password && `text-danger`}>Password</label>
         <input
             className='form-control'
@@ -103,6 +137,7 @@ const validate = values => {
         />
         {formik.errors.password ? <div>{formik.errors.password}</div> : null}
         </div>
+        
         <div className="mb-3">
         <label htmlFor="confirm" className={formik.errors.confirm && `text-danger`}>Confirm Password</label>
         <input
@@ -115,11 +150,11 @@ const validate = values => {
         />
         {formik.errors.confirm ? <div>{formik.errors.confirm}</div> : null}
         </div>
-            <div className="mb-3">
-                <input type="submit"className="form-control" value="Sign up" />
-            </div>
+           
         </form>
-
+        <div className="mb-3">
+                <input type="submit" onClick={createUser} className="form-control" value="Sign up" />
+            </div>
         <h3>if you have an account please click <Link 
         to="/authentication/login"
         className='h3 text-primary'>here</Link> </h3>

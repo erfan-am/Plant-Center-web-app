@@ -1,5 +1,6 @@
 import './App.css';
 import Nav from './Components/Nav';
+import Navbar from './Components/Navbar';
 import { Routes,Route,useNavigate} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {syncData,choiceData,removeData,addchoice,decchoice} from './redux/posts/PostsReducer'
@@ -17,9 +18,10 @@ function App() {
   const [user,setUser]=useState(true)
   const navigate=useNavigate()
   const {data,choices}=useSelector(state=>state.posts)
+  const dispatch=useDispatch()
 
-  
-const dispatch=useDispatch()
+
+
 
 useEffect(()=>{
   dispatch(syncData())
@@ -56,7 +58,8 @@ useEffect(()=>{
     }
   return (
     <div className="">
-    <Nav choices={choices}/>
+    {/* <Nav choices={choices}/> */}
+    <Navbar choices={choices}/>
       <Routes>
         <Route path='/' element={<Home data={data}/>} />
         <Route path='/shop' element={<Shop data={data}  addTools={addTools} />} />
