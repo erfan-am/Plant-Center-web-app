@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function Navbar({choices}) {
+export default function Navbar({choices,user,logOut}) {
   return (
 <nav className="navbar navbar-expand-lg navbar-light bg-light">
     <div className="container-fluid">
@@ -33,9 +33,10 @@ export default function Navbar({choices}) {
                 />
                 </span>
                 <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a className="dropdown-item" href="#">Action</a></li>
-                    <li><a className="dropdown-item" href="#">Another action</a></li>
-                    <li><a className="dropdown-item" href="#">Something else here</a></li>
+                {user ? <> <li><a className="dropdown-item" href="#">{user && user.username}</a></li>
+                     <li><Link className="dropdown-item" to={`user/${user && user.name}`}>User Information</Link></li></> : null}
+                    {user ? <li><span className="dropdown-item btn" onClick={logOut}>Logout</span></li> :
+                    <li><Link className="dropdown-item" to="/authentication/login">Login</Link></li>}
                 </ul>
                 </div>
                     <Link className="text-reset nav-likn " to="/box">

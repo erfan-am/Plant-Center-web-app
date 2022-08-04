@@ -8,8 +8,8 @@ const initialState={
 }
 
 export const syncData=createAsyncThunk("PostsReducer/syncData",async()=>{
-    const {data}=await axios.get(URL+'postBranch/')
-    return data
+    // const {data}=await axios.get(URL+'postBranch/')
+    return "hello"
 })
 
 const PostsReducer=createSlice({

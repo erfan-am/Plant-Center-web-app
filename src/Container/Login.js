@@ -1,10 +1,14 @@
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import { useFormik } from 'formik';
-import  axiosInstance  from '../axios';
+import {useDispatch,useSelector} from 'react-redux'
+import React from 'react'
+import { getToken, getUserTokenDecode, logIn } from '../redux/user/userreducer';
+import userEvent from '@testing-library/user-event';
 
 const Login = () => {
-   
-
+  const dispatch=useDispatch()
+  const {tokens} =useSelector(state=>state.user)
+  const navigate=useNavigate()
 const validate = values => {
     const errors = {};
     if (!values.email) {
@@ -15,7 +19,7 @@ const validate = values => {
     if (!values.password) {
         errors.password = 'Required';
       }else if (values.password.length < 8){
-        errors.password = 'Invalid password address';
+        errors.password = 'Invalid password';
       }
      
     return errors;
@@ -32,19 +36,24 @@ const validate = values => {
   });
 
 
-  const handleData=()=>{
-    axiosInstance
-    .post('token/',{
-      email:formik.values.email,
-      password:formik.values.password,
-    })
-    .then((res) => {
-      localStorage.setItem('access_token', res.data.access);
-      localStorage.setItem('refresh_token', res.data.refresh);
-      axiosInstance.defaults.headers['Authorization'] =
-        'JWT ' + localStorage.getItem('access_token');
-        console.log(res);
-    })
+  const handleData=async()=>{
+    const {email,password} =formik.values
+    const response= await fetch('http://127.0.0.1:8000/api/token/', {
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({'email':email, 'password':password})
+            })
+    const data=await response.json()
+    if(response.status === 200){
+      localStorage.setItem('ddd',JSON.stringify(data));
+      dispatch(getToken(data))
+      dispatch(getUserTokenDecode(data))
+      navigate('/')
+    }else{
+        alert('Something went wrong!')
+    }
   }
   return (
     <div className='container'>
@@ -55,7 +64,7 @@ const validate = values => {
         <label htmlFor="email" className={formik.errors.email && `text-danger`}>Email</label>
             <input
                 className='form-control'
-                id="email"
+                id="emailLogin"
                 name="email"
                 type="text"
                 onChange={formik.handleChange}
@@ -67,9 +76,9 @@ const validate = values => {
         <label htmlFor="email" className={formik.errors.password && `text-danger`}>Password</label>
         <input
             className='form-control'
-            id="password"
+            id="passwordLogin"
             name="password"
-            type="password"
+            type="text"
             onChange={formik.handleChange}
             value={formik.values.password}
         />

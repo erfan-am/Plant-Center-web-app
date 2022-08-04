@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager,PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.utils.translation import gettext_lazy as _
-# Create your models here.
 
 
 
@@ -17,6 +16,8 @@ class CustomAccountManager(BaseUserManager):
         return self.create_user(email,username,password,**other_fields)
   
     def create_user(self,email,username,password,**other_fields):
+        other_fields.setdefault('is_active',True)
+        other_fields.setdefault('is_staff',True)
         if not email:
             raise ValueError(_("you must Provide an email address"))
         email=self.normalize_email(email)

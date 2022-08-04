@@ -1,25 +1,36 @@
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import { useFormik } from 'formik';
-import  axiosInstance  from '../axios';
 
+import { getToken, getUserTokenDecode } from '../redux/user/userreducer';
+import {useDispatch} from 'react-redux'
 const Signup = () => {
+   const dispatch=useDispatch()
+   const navigate=useNavigate()
    
-   
-const createUser=()=>{
+const createUser=async()=>{
   const {username,phone,email,location,password}=formik.values
-  axiosInstance
-  .post('user/register',{
-    email:email,
-    username:username,
-    phone:phone,
-    location:location,
-    password:password
-  }).then((res)=>{
-    console.log(res);
-    console.log(res.data);
+  const response= await fetch('http://127.0.0.1:8000/register',{
+    method:'POST',
+    headers:{'Content-Type':'application/json' },
+    body:JSON.stringify({
+      'email':email,
+      'username':username,
+      'phone':phone,
+      'location':location,
+      'password':password
+    })
   })
-}
-console.log(localStorage.getItem('refresh_token'))
+  const data=await response.json()
+  if(response.status === 200){
+    // localStorage.setItem('ddd',JSON.stringify(data));
+    // dispatch(getUserTokenDecode(data))
+    // dispatch(getToken(data))
+    navigate('/authentication/login')
+    }else{
+      alert('Something went wrong!')
+    }
+  }
+
 const validate = values => {
     const errors = {};
     if (!values.username) {
