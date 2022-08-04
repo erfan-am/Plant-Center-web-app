@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
-
+import uuid
 
 class CustomAccountManager(BaseUserManager):
     def create_superuser(self,email,username,password,**other_fields):
@@ -45,7 +45,8 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.username
 
 class PostBranch(models.Model):
-    branchName=models.CharField(max_length=250,primary_key=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    branchName=models.CharField(max_length=250)
     branchImage=models.CharField(max_length=250)
     def __str__(self):
         return self.branchName
@@ -54,7 +55,7 @@ class Post(models.Model):
     name=models.CharField(max_length=250)
     price=models.CharField(max_length=260)
     image=models.CharField(max_length=250)
-    mainQuantity=models.IntegerField(default=1)
+    mainQuantity=models.IntegerField()
     branchName=models.ForeignKey(PostBranch,related_name="items",on_delete=models.CASCADE)
     def __str__(self):
         return self.name
@@ -65,6 +66,6 @@ class Post(models.Model):
 class Custom(models.Model):
     name=models.CharField(max_length=250)
     price=models.CharField(max_length=250)
-    quantity=models.IntegerField(default=1)
+    quantity=models.IntegerField()
     date=models.DateField(default=datetime.now())
     email=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)

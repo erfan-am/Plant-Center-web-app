@@ -4,6 +4,26 @@ import { useNavigate,Link } from 'react-router-dom'
 const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
+
+  
+const sendOrders=()=>{
+  // const res=await fetch('http://127.0.0.1:8000/orders/',{
+  //   method:'POST',
+  //   headers:{
+  //     'Content-Type':'application/json'
+  //   },
+  //   body:JSON.stringify({'orders':choices})
+  // })
+  // const data=await res.json()
+  // if(res.status===200){
+  //   console.log(data);
+  // }
+  // else{
+  //   console.log('some thing get wrong');
+  // }
+  console.log(choices);
+}
+
  useEffect(()=>{
     choices.length ==0 && navigate('/shop')
  },[choices])
@@ -44,7 +64,7 @@ const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => 
         </table>
 
 
-        { choices.length !==0 && <button onClick={()=>onPay()} className="btn btn-primary">Go To Pay</button>}
+        { choices.length !==0 && <button onClick={()=>sendOrders()} className="btn btn-primary">Go To Pay</button>}
     </div>
   )
 }

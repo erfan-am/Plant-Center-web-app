@@ -11,9 +11,9 @@ router.register('branch',branchView)
 router.register('posts',PostVliewList)
 
 urlpatterns=[
-path('api/token/refresh/',TokenRefreshView.as_view(),name="token_refresh"),
+path('register/',CustomUserCreate.as_view(),name='register'),
 path('api/token/',MyTokenObtainPairView.as_view(),name="token_obtain_pair"),
-path('register/',CustomUserCreate.as_view(),name='register')
+path('api/token/refresh/',TokenRefreshView.as_view(),name="token_refresh"),
 ]
 
 urlpatterns +=router.urls
