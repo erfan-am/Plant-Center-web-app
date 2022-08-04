@@ -66,7 +66,7 @@ useEffect(()=>{
   } 
 
   useEffect(()=>{
-    let twoMin=4000
+    let twoMin=20000
       let interval=setInterval(()=>{
        updateToken()
       },twoMin)

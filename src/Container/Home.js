@@ -24,7 +24,7 @@ const Home = ({data}) => {
                 </div>
             </div>
             <div className="row mt-5 p-5">
-                    {/* {data && data.map(item=>(
+                    {data && data.map(item=>(
                        <div key={Math.random()} className='col'>
                             <div className="card" style={{width: "19rem"}}>
                                 <img style={{width:'100%',height:'250px'}} 
@@ -35,7 +35,7 @@ const Home = ({data}) => {
                                 <Link to={`shop/${item.branchName}`} className="btn btn-primary">Go Shop</Link>
                             </div>
                         </div>
-                    ))} */}
+                    ))}
             </div>
         </div>
     )

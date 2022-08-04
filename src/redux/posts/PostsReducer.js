@@ -1,5 +1,4 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios'
 const URL="http://127.0.0.1:8000/";
 const initialState={
     data:null,
@@ -8,8 +7,14 @@ const initialState={
 }
 
 export const syncData=createAsyncThunk("PostsReducer/syncData",async()=>{
-    // const {data}=await axios.get(URL+'postBranch/')
-    return "hello"
+   const res= await fetch('http://127.0.0.1:8000/branch')
+    const data=await res.json()
+    if(res.status ===200){
+        console.log(data);
+        return data
+    }else{
+        throw "no conection"
+    }
 })
 
 const PostsReducer=createSlice({

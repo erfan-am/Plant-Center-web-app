@@ -9,9 +9,11 @@ const Signup = () => {
    
 const createUser=async()=>{
   const {username,phone,email,location,password}=formik.values
-  const response= await fetch('http://127.0.0.1:8000/register',{
+  await fetch('http://127.0.0.1:8000/register/',{
     method:'POST',
-    headers:{'Content-Type':'application/json' },
+    headers:{
+      'Content-Type':'application/json' 
+    },
     body:JSON.stringify({
       'email':email,
       'username':username,
@@ -19,16 +21,14 @@ const createUser=async()=>{
       'location':location,
       'password':password
     })
+  }).then(response=>{
+    // if(response.status === 200){
+      navigate('/authentication/login')
+      console.log(response);
+      // }
+  }).catch(err=>{
+    console.log(err);
   })
-  const data=await response.json()
-  if(response.status === 200){
-    // localStorage.setItem('ddd',JSON.stringify(data));
-    // dispatch(getUserTokenDecode(data))
-    // dispatch(getToken(data))
-    navigate('/authentication/login')
-    }else{
-      alert('Something went wrong!')
-    }
   }
 
 const validate = values => {

@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.utils.translation import gettext_lazy as _
@@ -35,9 +36,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     email=models.EmailField(unique=True,max_length=30)
     password=models.CharField(max_length=30)
     location=models.CharField(max_length=400)
-    objects=CustomAccountManager()
     is_staff=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
+    objects=CustomAccountManager()
     USERNAME_FIELD="email"
     REQUIRED_FIELDS=["username","password","phone","location"]
     def __str__(self):
@@ -55,6 +56,15 @@ class Post(models.Model):
     image=models.CharField(max_length=250)
     mainQuantity=models.IntegerField(default=1)
     branchName=models.ForeignKey(PostBranch,related_name="items",on_delete=models.CASCADE)
-    username=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)
     def __str__(self):
         return self.name
+
+
+
+
+class Custom(models.Model):
+    name=models.CharField(max_length=250)
+    price=models.CharField(max_length=250)
+    quantity=models.IntegerField(default=1)
+    date=models.DateField(default=datetime.now())
+    email=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)

@@ -12,6 +12,20 @@ from rest_framework import status
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+
+
+
+class branchView(viewsets.ModelViewSet):
+    queryset=PostBranch.objects.all()
+    serializer_class=PostBranchSerializer
+
+    
+class PostVliewList(viewsets.ModelViewSet):
+    queryset=Post.objects.all()
+    serializer_class=PostSerilizer
+
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -28,15 +42,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-class branchView(viewsets.ModelViewSet):
-    queryset=PostBranch.objects.all()
-    serializer_class=PostBranchSerializer
-
-    
-class PostVliewList(viewsets.ModelViewSet):
-    queryset=Post.objects.all()
-    serializer_class=PostSerilizer
 
 
 
