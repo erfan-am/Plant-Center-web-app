@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets
-
-from .models import Post, PostBranch
-from .serializers import PostSerilizer,PostBranchSerializer,UserSerilizer
+from .models import Post, PostBranch,Custom, User
+from .serializers import CustomSerialzier, PostSerilizer,PostBranchSerializer,UserSerilizer
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import  IsAuthenticated,AllowAny
+from rest_framework.authentication import TokenAuthentication
 from rest_framework import status
 # Create your views here.
 
@@ -23,6 +23,11 @@ class branchView(viewsets.ModelViewSet):
 class PostVliewList(viewsets.ModelViewSet):
     queryset=Post.objects.all()
     serializer_class=PostSerilizer
+
+
+class ordersView(viewsets.ModelViewSet):
+    queryset=Custom.objects.all()
+    serializer_class=CustomSerialzier
 
 
 
@@ -56,6 +61,22 @@ class CustomUserCreate(APIView):
             if newuser:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(req_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+
+class CustomersOrders(APIView):
+    def post(self,request):
+       for i in request.data:
+            orders=Custom.objects.create(
+                name=i['name'], 
+                price=i['price'],
+                quantity=i['quantity'],
+                image=i['image'],
+                user=User.objects.get(username=i['username'])
+            )
+            serilaze=CustomSerialzier(data=orders,many=True)
+            if serilaze.is_valid():
+                serilaze.save()
+       return Response("is ok")
 
 
 

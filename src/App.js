@@ -26,7 +26,7 @@ function App() {
       dispatch(getToken(localStorage.getItem('ddd') ? JSON.parse(localStorage.getItem('ddd')) : null))
   },[])
   // localStorage.removeItem('ddd')
-
+console.log(user);
 useEffect(()=>{
     dispatch(getUserTokenDecode(tokens))
 },[])
@@ -83,7 +83,8 @@ useEffect(()=>{
   // #####################
 
   const addTools=(item)=>{
-    dispatch(choiceData({name:item.name,price:item.price,image:item.image,quantity:1,id:Math.random()}))
+    dispatch(choiceData({name:item.name,price:item.price,
+      image:item.image,quantity:1,id:Math.random(),username:user.username}))
   }
   const removeItem=(item)=>{
    dispatch(removeData(item))

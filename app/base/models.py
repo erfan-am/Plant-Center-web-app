@@ -66,6 +66,10 @@ class Post(models.Model):
 class Custom(models.Model):
     name=models.CharField(max_length=250)
     price=models.CharField(max_length=250)
+    image=models.CharField(max_length=250)
     quantity=models.IntegerField()
     date=models.DateField(default=datetime.now())
-    email=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)
+    _id=models.AutoField(primary_key=True,editable=False)
+    user=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name

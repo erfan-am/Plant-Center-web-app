@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
 
+import axios from 'axios'
 const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
 
   
-const sendOrders=()=>{
-  // const res=await fetch('http://127.0.0.1:8000/orders/',{
+const sendOrders=async()=>{
+  await axios({
+    method: 'post',
+    url: 'http://127.0.0.1:8000/orders/',
+    data:choices
+  }).then(res=>{
+    console.log(res);
+  }).catch(err=>{
+    console.log(err);
+  });  // const response=await fetch('http://127.0.0.1:8000/orders/',{
   //   method:'POST',
   //   headers:{
   //     'Content-Type':'application/json'
   //   },
-  //   body:JSON.stringify({'orders':choices})
+  //   body:JSON.stringify({'data':choices})
   // })
-  // const data=await res.json()
-  // if(res.status===200){
+  // const data=await response.json()
+  // if(response.status===200){
   //   console.log(data);
   // }
   // else{
   //   console.log('some thing get wrong');
   // }
-  console.log(choices);
 }
 
  useEffect(()=>{
