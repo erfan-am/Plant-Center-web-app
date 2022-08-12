@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
+import {useDispatch} from 'react-redux'
 import axios from 'axios'
+import { removeallchoices } from '../redux/posts/PostsReducer'
 
 
 const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
-
+    const dispatch=useDispatch()
   
 const sendOrders=async()=>{
   await axios({
@@ -15,6 +17,11 @@ const sendOrders=async()=>{
     data:choices
   }).then(res=>{
     console.log(res);
+    if(res.status ===200){
+      navigate('/shop')
+      alert("we send Your orders soon")
+      dispatch(removeallchoices())
+    }
   }).catch(err=>{
     console.log(err);
   })

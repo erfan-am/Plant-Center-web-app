@@ -25,6 +25,12 @@ const PostsReducer=createSlice({
       removeData:(state,action)=>removeTools(state,action),
       addchoice:(state,action)=>addchoiceItem(state,action),
       decchoice:(state,action)=>decchoiceItem(state,action),
+      removeallchoices:(state,action)=>{
+        return{
+            ...state,
+            choices:[]
+        }
+      },
     },
     extraReducers:{
         [syncData.pending]:(state)=>{
@@ -41,7 +47,7 @@ const PostsReducer=createSlice({
 })
 
 
-export const {choiceData,removeData,addchoice,decchoice}=PostsReducer.actions;
+export const {choiceData,removeData,addchoice,decchoice,removeallchoices}=PostsReducer.actions;
 export default PostsReducer.reducer;
 
 

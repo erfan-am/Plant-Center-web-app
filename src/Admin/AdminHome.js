@@ -48,10 +48,10 @@ const AdminHome = ({data }) => {
             <nav id="sidebarMenu" style={{height:'80%',width:'100%'}} className="collapse d-lg-block sidebar collapse bg-white">
         <div className="position-sticky">
           <div className="list-group list-group-flush mx-3 mt-4">
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple" aria-current="true">
+            <a href="#" className="list-group-item list-group-item-action active py-2 ripple" aria-current="true">
               <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
             </a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple active">
+            <a href="#" className="list-group-item list-group-item-action py-2 ripple ">
               <i className="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
             </a>
             <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
@@ -77,7 +77,8 @@ const AdminHome = ({data }) => {
         </div>
       </nav>
             </div>
-<div style={{height:'100vh',width:'70%',borderLeft:'1px solid'}}>
+<div className='container' style={{height:'100vh',width:'70%',borderLeft:'1px solid'}}>
+    <h1>Create Post</h1>
     <form className='p-3'>
   <div className="row">
     <div className="col">

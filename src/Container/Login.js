@@ -50,7 +50,7 @@ const validate = values => {
       localStorage.setItem('ddd',JSON.stringify(data));
       dispatch(getToken(data))
       dispatch(getUserTokenDecode(data))
-      navigate('/')
+      navigate('/shop')
     }else{
         alert('Something went wrong!')
     }
