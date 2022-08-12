@@ -1,21 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Carousel from '../Components/Carousel'
 const Home = ({data}) => {
 
   const  links=["https://www.ikea.com/om/en/images/products/fejka-artificial-potted-plant-in-outdoor-monstera__0614197_pe686822_s5.jpg","https://www.bigw.com.au/medias/sys_master/images/images/ha9/h67/17304762155038.jpg"]
   return (
         <div className='container'>
             <div id="row_titel" className="row p-4">
-                {links.map(item=>(
-                     <div key={Math.random()} className="card" style={{width: "32rem"}}>
-                     <img className="card-img-top" src={item} alt="Card image cap"/>
-                    <div className="card-body">
-                        <h5 className="card-title">Card title</h5>
-                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <Link to="/shop" className="btn btn-primary">Go somewhere</Link>
-                    </div>
-                    </div>
-                ))}
+            {/* <Carousel links={links} key={Math.random()}/> */}
+                   
             </div>
             <div id='homeCol'>
                 <h2 className='text-center'>Shop center</h2>

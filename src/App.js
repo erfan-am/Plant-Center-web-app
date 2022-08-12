@@ -38,11 +38,11 @@ const fetchOrders=async()=>{
   }
 }
 
-const checkExistEmail=()=>{
+const checkExistEmail=(item)=>{
  return axios({
   method:'post',
   url:'http://127.0.0.1:8000/emailexist/',
-  data:{"email":user.email}
+  data:{"email":user.email,"name":item}
   }).then((res)=>{
     console.log(res.data);
   }).catch(
@@ -141,10 +141,12 @@ useEffect(()=>{
     }
   return (
     <div className="">
+      <Routes>
+      <Route path='/adminhome' element={<AdminHome  data={data} />} />
+      </Routes>
     {params.pathname !== "/adminhome" &&  <Navbar user={user} choices={choices} logOut={logOut} />}
       <Routes>
         <Route path='/' element={<Home data={data}/>} />
-        <Route path='/adminhome' element={<AdminHome  data={data} />} />
         <Route path='/shop' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail}  addTools={addTools} />} />
         <Route path='/shop/:name' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail} addTools={addTools} />} />
         <Route path='/authentication/login' element={<Login />} />

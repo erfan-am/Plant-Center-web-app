@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets
-from .models import Post, PostBranch,Custom, User
+from .models import EmailCallExist, Post, PostBranch,Custom, User
 from .serializers import CustomSerialzier, EmailExistSerialzier, PostSerilizer,PostBranchSerializer,UserSerilizer
 from rest_framework.views import APIView
 from rest_framework.permissions import  IsAuthenticated,AllowAny
@@ -66,11 +66,19 @@ class CustomUserCreate(APIView):
 class EmailExistCallView(viewsets.ModelViewSet):
     def post(self,request):
         print(request.data)
-        email=EmailExistSerialzier(data=request.data)
+        order=EmailCallExist.objects.create(
+            email=request.data['email'],
+            postName=Post.objects.get(name=request.data['name'])
+        )
+        email=EmailExistSerialzier(data=order)
         if email.is_valid():
             email.save()
-            return Response(request.data)
+            return Response(status=status.HTTP_201_CREATED)
+        return Response(request.data)
 
+class EmailView(viewsets.ModelViewSet):
+    queryset=EmailCallExist.objects.all()
+    serializer_class=EmailExistSerialzier
 class CustomersOrders(APIView):
     def post(self,request):
        for i in request.data:
@@ -84,6 +92,7 @@ class CustomersOrders(APIView):
             serilaze=CustomSerialzier(data=orders,many=True)
             if serilaze.is_valid():
                 serilaze.save()
+                return Response(status=status.HTTP_201_CREATED)
        return Response("is ok")
 
 
@@ -92,7 +101,7 @@ class CustomersOrders(APIView):
 
 class CreatePostAndBranch(APIView):
     def post(self,req):
-        if PostBranch.objects.get(branchName = req.data['BranchName']):
+        if  PostBranch.objects.get(branchName = req.data['BranchName']):
             print('its already exist')
         else:
             orders=PostBranch.objects.create(

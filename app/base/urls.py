@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CreatePostAndBranch, EmailExistCallView,CustomersOrders, PostVliewList,branchView,CustomUserCreate,MyTokenObtainPairView
+from .views import CreatePostAndBranch, EmailExistCallView,CustomersOrders, EmailView, PostVliewList,branchView,CustomUserCreate,MyTokenObtainPairView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework import routers
 
@@ -8,7 +8,7 @@ app_name="users"
 router = routers.SimpleRouter()
 router.register('branch',branchView)
 router.register('posts',PostVliewList)
-# router.register('orders',customsView)
+router.register('emails',EmailView)
 
 urlpatterns=[
 path('register/',CustomUserCreate.as_view(),name='register'),

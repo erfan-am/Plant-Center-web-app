@@ -1,18 +1,23 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import Modal from '../Components/Modal'
 
 const AdminHome = ({data }) => {
     const [password,setPassword]=useState('')
-    
     const [branchNew,setbranchNew]=useState('')
     const [postName,setPostName]=useState('')
     const [postquantity,setPostquantity]=useState(null)
     const [off,setOff]=useState(null)
     const [totalPrice,setTotoalPrice]=useState(null)
+    const [modalShow,setModlaShow]=useState(false)
+    const [emails,setEmails]=useState([])
 
     const [branchNewimage]=useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdalYFQ90SY9borQ579S-gt9WeEFzc-N1mzVL6o8I7GZzx3VA1aD-NQXk1fy979qX4eAQ&usqp=CAU')
     const [select,setSelect]=useState('')
     const pass="12345678";
+
+    const colors=['primary','secondary','success','danger','warning','info']
     const handleChange=(e)=>{
         const {value}=e.target
         setSelect(value)
@@ -41,43 +46,51 @@ const AdminHome = ({data }) => {
            console.log(err);
          })
        }
-      
+
+    const setModalValue=(item)=>{
+        setModlaShow(true)
+        setPostName(item.name)
+        setEmails(item.emails)
+        setTotoalPrice(item.price)
+        setPostquantity(item.mainQuantity)
+       }
+    
   return (
         <div className="row">
             <div style={{height:'100vh',width:'30%'}}>
             <nav id="sidebarMenu" style={{height:'80%',width:'100%'}} className="collapse d-lg-block sidebar collapse bg-white">
         <div className="position-sticky">
           <div className="list-group list-group-flush mx-3 mt-4">
-            <a href="#" className="list-group-item list-group-item-action active py-2 ripple" aria-current="true">
+            <Link to="#" className="list-group-item list-group-item-action active py-2 ripple" aria-current="true">
               <i className="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple ">
+            </Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple ">
               <i className="fas fa-chart-area fa-fw me-3"></i><span>Webiste traffic</span>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-lock fa-fw me-3"></i><span>Password</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple">
+            </Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-lock fa-fw me-3"></i><span>Password</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-chart-line fa-fw me-3"></i><span>Analytics</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple">
               <i className="fas fa-chart-pie fa-fw me-3"></i><span>SEO</span>
-            </a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-globe fa-fw me-3"></i><span>International</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-building fa-fw me-3"></i><span>Partners</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-users fa-fw me-3"></i><span>Users</span></a>
-            <a href="#" className="list-group-item list-group-item-action py-2 ripple"><i
-                className="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></a>
+            </Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-chart-bar fa-fw me-3"></i><span>Orders</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-globe fa-fw me-3"></i><span>International</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-building fa-fw me-3"></i><span>Partners</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-calendar fa-fw me-3"></i><span>Calendar</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-users fa-fw me-3"></i><span>Users</span></Link>
+            <Link to="#" className="list-group-item list-group-item-action py-2 ripple"><i
+                className="fas fa-money-bill fa-fw me-3"></i><span>Sales</span></Link>
           </div>
         </div>
       </nav>
             </div>
-<div className='container' style={{height:'100vh',width:'70%',borderLeft:'1px solid'}}>
+<div className='container' style={{overflowY:'scroll', height:'100vh',width:'70%',borderLeft:'1px solid'}}>
     <h1>Create Post</h1>
     <form className='p-3'>
   <div className="row">
@@ -129,7 +142,45 @@ const AdminHome = ({data }) => {
   </div>
 </form>
 <button onClick={()=>createPost(branchNew,branchNewimage)} className='btn btn-primary'>Post Data</button>
+  <hr />    
+  <h2>Posts of Branches</h2>
+    <div style={{
+        display:'flex',
+        flexDirection:'row',
+        minHeight:'200px'
+    }}>
+        {modalShow && <Modal 
+        postName={postName}
+        emails={emails}
+        setModlaShow={setModlaShow}
+        setPostName={setPostName}
+        setOff={setOff}
+        setTotoalPrice={setTotoalPrice}
+        setPostquantity={setPostquantity}
+        postquantity={postquantity}
+        off={off}
+        totalPrice={totalPrice}        
+         />}
+        {data && data.map(item=>(
+          <div className='dropdown'>
+           <button className={`btn text-white btn-${colors[Math.floor(Math.random(colors)*colors.length)]}  dropdown-toggle`}  id={item.id} data-bs-toggle="dropdown" aria-expanded="false">
+                {item.branchName}
+            </button>
+            <div className="dropdown-menu" aria-labelledby={item.id}>
+                {item.items.map(it=>(
+                <span 
+                onClick={()=>setModalValue(it)}
+                data-bs-toggle="modal" 
+                data-bs-target="#exampleModal" 
+                className="dropdown-item">{it.name}</span>
+                ))}
+            </div>
+            </div>
+        ))}
     </div>
+    </div>
+
+   
     </div>
   )
 }

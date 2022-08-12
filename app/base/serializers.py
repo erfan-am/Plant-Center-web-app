@@ -2,7 +2,14 @@
 from rest_framework import serializers 
 from .models import Custom, EmailCallExist, Post,PostBranch,User
 
+
+class EmailExistSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model=EmailCallExist
+        fields="__all__"
+
 class PostSerilizer(serializers.ModelSerializer):
+    emails=EmailExistSerialzier(read_only=True, many=True )
     class Meta:
         model=Post
         fields="__all__"
@@ -16,11 +23,6 @@ class PostBranchSerializer(serializers.ModelSerializer):
 class CustomSerialzier(serializers.ModelSerializer):
     class Meta:
         model=Custom
-        fields="__all__"
-
-class EmailExistSerialzier(serializers.ModelSerializer):
-    class Meta:
-        model=EmailCallExist
         fields="__all__"
 
 class UserSerilizer(serializers.ModelSerializer):

@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
+import Motive from '../Components/Motive'
+
 const Shop = ({addTools,data,checkExistEmail,user}) => {
+  
+    
   return (
     <div className='container'>
             <div className="col">
@@ -8,9 +12,9 @@ const Shop = ({addTools,data,checkExistEmail,user}) => {
             </div>
             {
               data &&  data.map(item=>(
-                    <div key={Math.random()} className='row mt-3'>
+                 <Motive  key={Math.random()}>
                         <div className="col-lg-6 ImageShopTitle">
-                            <img src={item.branchImage} alt={item.branchName} />
+                            <img style={{width:'100%',height:'480px'}} src={item.branchImage} alt={item.branchName} />
                         </div>
                         <div className="col">
                         <div className='row ff'>
@@ -24,15 +28,14 @@ const Shop = ({addTools,data,checkExistEmail,user}) => {
                                </div>
                                 <Link to={`/shop/seeDetails/${item.name}`} className='btn btn-primary mb-1 ss'>See Details</Link>
                                {item.mainQuantity > 0 ? <button onClick={()=>addTools(item)} className='btn btn-success'>Add To Box</button>
-                                :<button onClick={()=>checkExistEmail()} className='btn btn-success'>call me</button>}
+                                :<button onClick={()=>checkExistEmail(item.name)} className='btn btn-success'>call me</button>}
                                  </div>
                             </div>
                         ))}
                             </div>
                         </div>
                         <hr/>
-                    </div>
-                    
+                    </Motive>
                 ))
             }
     </div>
