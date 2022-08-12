@@ -1,17 +1,19 @@
 import './App.css';
 import Navbar from './Components/Navbar';
-import { Routes,Route,useNavigate} from 'react-router-dom'
+import { Routes,Route,useNavigate,useLocation} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
 import {syncData,choiceData,removeData,addchoice,decchoice} from './redux/posts/PostsReducer'
 import Home from './Container/Home';
 import Shop from './Container/Shop';
 import Details from './Container/Details';
 import Box from './Container/Box';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Login from './Container/Login';
 import Singup from './Container/Singup';
 import { getToken, getUserTokenDecode, LogoutValidate } from './redux/user/userreducer';
 import UserInformation from './Container/UserInformation';
+import axios from 'axios';
+import AdminHome from './Admin/AdminHome';
 
 function App() {
 
@@ -21,7 +23,36 @@ function App() {
   const {data,choices}=useSelector(state=>state.posts)
   const {user,tokens}=useSelector(state=>state.user)
   const dispatch=useDispatch()
+  const params=useLocation()
   console.log(tokens);
+
+  console.log(params);
+const fetchOrders=async()=>{
+  const res=await fetch('http://127.0.0.1:8000/orders/')
+  const data=await res.data
+  if(res.status === 200){
+    console.log(data);
+  }
+  else{
+    console.log('something get wrong');
+  }
+}
+
+const checkExistEmail=()=>{
+ return axios({
+  method:'post',
+  url:'http://127.0.0.1:8000/emailexist/',
+  data:{"email":user.email}
+  }).then((res)=>{
+    console.log(res.data);
+  }).catch(
+  err=>{
+    console.log(err);
+  })
+}
+
+
+
   useEffect(()=>{
       dispatch(getToken(localStorage.getItem('ddd') ? JSON.parse(localStorage.getItem('ddd')) : null))
   },[])
@@ -81,10 +112,13 @@ useEffect(()=>{
     navigate('authentication/login')
   }
   // #####################
-
+  // localStorage.removeItem('choices')
+  console.log(localStorage.getItem('choices'));
   const addTools=(item)=>{
-    dispatch(choiceData({name:item.name,price:item.price,
+    dispatch(choiceData({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
       image:item.image,quantity:1,id:Math.random(),username:user.username}))
+    // localStorage.setItem('choices',JSON.stringify({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
+    //     image:item.image,quantity:1,id:Math.random(),username:user.username}))
   }
   const removeItem=(item)=>{
    dispatch(removeData(item))
@@ -107,16 +141,16 @@ useEffect(()=>{
     }
   return (
     <div className="">
-    {/* <Nav choices={choices}/> */}
-    <Navbar user={user} choices={choices} logOut={logOut} />
+    {params.pathname !== "/adminhome" &&  <Navbar user={user} choices={choices} logOut={logOut} />}
       <Routes>
         <Route path='/' element={<Home data={data}/>} />
-        <Route path='/shop' element={<Shop data={data}  addTools={addTools} />} />
-        <Route path='/shop/:name' element={<Shop data={data} addTools={addTools} />} />
+        <Route path='/adminhome' element={<AdminHome  data={data} />} />
+        <Route path='/shop' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail}  addTools={addTools} />} />
+        <Route path='/shop/:name' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail} addTools={addTools} />} />
         <Route path='/authentication/login' element={<Login />} />
-        <Route path='/user/:username' element={<UserInformation user={user} />} />
+        <Route path='/user/:username' element={<UserInformation fetchOrders={fetchOrders} user={user} />} />
         <Route path='/authentication/signup' element={<Singup />} />
-        <Route path='/shop/seeDetails/:name' element={<Details data={data} addTools={addTools} />} />
+        <Route path='/shop/seeDetails/:name' element={<Details checkExistEmail={checkExistEmail} data={data} addTools={addTools} />} />
         <Route path='/box' element={<Box onPay={onPay} decQuantity={decQuantity} addQuantity={addQuantity} totalPrices={totalPrices} choices={choices} removeItem={removeItem} />} />
       </Routes>
     </div>

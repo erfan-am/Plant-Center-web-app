@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate,Link } from 'react-router-dom'
-
 import axios from 'axios'
+
+
 const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
@@ -16,20 +17,7 @@ const sendOrders=async()=>{
     console.log(res);
   }).catch(err=>{
     console.log(err);
-  });  // const response=await fetch('http://127.0.0.1:8000/orders/',{
-  //   method:'POST',
-  //   headers:{
-  //     'Content-Type':'application/json'
-  //   },
-  //   body:JSON.stringify({'data':choices})
-  // })
-  // const data=await response.json()
-  // if(response.status===200){
-  //   console.log(data);
-  // }
-  // else{
-  //   console.log('some thing get wrong');
-  // }
+  })
 }
 
  useEffect(()=>{
@@ -49,6 +37,7 @@ const sendOrders=async()=>{
             <th scope="col">#</th>
             <th scope="col">Image</th>
             <th scope="col">Name</th>
+            <th scope="col">MainQuantity</th>
             <th scope="col">Quantity</th>
             <th scope="col">price</th>
             <th scope="col">Remove</th>
@@ -57,15 +46,16 @@ const sendOrders=async()=>{
         <tbody>
            {choices.map(tool=>(
              <tr key={Math.random()}>
-             <th className='h3' scope="row">{i++}</th>
-             <td className='h3'><img width={50} src={tool.image} alt={tool.name+"09"} /></td>
-             <td className='h3'><Link to={`/shop/seeDetails/${tool.name}`}>{tool.name}</Link></td>
-             <td className='h3'><button onClick={()=> decQuantity(tool)} className='text-danger btn'>-</button> 
+             <th className='h4' scope="row">{i++}</th>
+             <td className='h4'><img width={50} src={tool.image} alt={tool.name+"09"} /></td>
+             <td className='h4'><Link to={`/shop/seeDetails/${tool.name}`}>{tool.name}</Link></td>
+             <td className='h4'><span>{tool.mainQuantity}</span></td>
+             <td className='h4'><button onClick={()=> decQuantity(tool)} className='text-danger btn'>-</button> 
              <h4 className='d-inline'>{tool.quantity}</h4> 
-             <button onClick={()=>addQuantity(tool)} 
+             <button disabled={tool.quantity == tool.mainQuantity && true} onClick={()=>addQuantity(tool)} 
              className=' btn text-success'>+</button></td>
              <td className='h3'>{tool.price}</td>
-             <td className='h3'><button onClick={()=>removeItem(tool.id)} className='btn'>X</button></td>
+             <td className='h3'><button onClick={()=>removeItem(tool.id)} className='btn btn-danger'>X</button></td>
              </tr>
            ))}
         </tbody>

@@ -15,8 +15,9 @@ const Details = ({addTools,data}) => {
             <div className="col">
                 <ul className='list-group p-4'>
                     <li className='list-group-item h3'>Name : {item.name}</li>
-                    <li className='list-group-item h3'>Price: {item.price}</li>
-                    <li className='list-group-item h3'>how to keep:Get started with Bootstrap Bootstrap is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes</li>
+                    <li className='list-group-item h5'>Price: {item.price}</li>
+                    <li className='list-group-item h4'>quantity: {item.mainQuantity}</li>
+                    <li className='list-group-item h5'>how to keep:Get started with Bootstrap Bootstrap is a powerful, feature-packed frontend toolkit. Build anything—from prototype to production—in minutes</li>
                     <li className='list-group-item h3'>
                     <button onClick={()=>addTools(item)} className='btn btn-success'>Add To Box</button>
                     </li>

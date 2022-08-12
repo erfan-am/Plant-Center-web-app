@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-const Shop = ({addTools,data}) => {
+const Shop = ({addTools,data,checkExistEmail,user}) => {
   return (
     <div className='container'>
             <div className="col">
@@ -15,12 +15,16 @@ const Shop = ({addTools,data}) => {
                         <div className="col">
                         <div className='row ff'>
                         {item.items.map(item=>(
-                                <div key={Math.random()} className="card m-3" style={{width: "10rem"}}>
+                                <div key={Math.random()} className="card m-3" style={{width: "11rem"}}>
                                 <img style={{width:'100%',height:'180px'}} className="card-img-top" src={item.image} alt="Card image cap"/>
                                 <div className="card-body row">
-                                <h5 className="card-title">{item.price}$</h5>
+                               <div className="d-flex" style={{justifyContent:'space-around'}}>
+                               {item.mainQuantity >0 && <p className="card-title">{item.price}$</p>}
+                                <p className={item.mainQuantity  ===0 ? `card-title text-danger` : 'card-title '}>quantity: {item.mainQuantity}</p>
+                               </div>
                                 <Link to={`/shop/seeDetails/${item.name}`} className='btn btn-primary mb-1 ss'>See Details</Link>
-                                <button onClick={()=>addTools(item)} className='btn btn-success'>Add To Box</button>
+                               {item.mainQuantity > 0 ? <button onClick={()=>addTools(item)} className='btn btn-success'>Add To Box</button>
+                                :<button onClick={()=>checkExistEmail()} className='btn btn-success'>call me</button>}
                                  </div>
                             </div>
                         ))}

@@ -1,7 +1,6 @@
 
-from pyexpat import model
 from rest_framework import serializers 
-from .models import Custom, Post,PostBranch,User
+from .models import Custom, EmailCallExist, Post,PostBranch,User
 
 class PostSerilizer(serializers.ModelSerializer):
     class Meta:
@@ -19,12 +18,16 @@ class CustomSerialzier(serializers.ModelSerializer):
         model=Custom
         fields="__all__"
 
+class EmailExistSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model=EmailCallExist
+        fields="__all__"
 
 class UserSerilizer(serializers.ModelSerializer):
     customes=CustomSerialzier(read_only=True, many=True )
     class Meta:
         model=User
-        fields=("username","email","location","phone","customes","password")
+        fields=("username","email","location","phone","customes","password","customes")
         extra_kwargs={"password":{"write_only":True}}
 
     def create(self, validated_data):

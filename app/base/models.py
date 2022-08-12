@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
-import uuid
 
 class CustomAccountManager(BaseUserManager):
     def create_superuser(self,email,username,password,**other_fields):
@@ -45,7 +44,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.username
 
 class PostBranch(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.AutoField(primary_key=True,editable=False)
     branchName=models.CharField(max_length=250)
     branchImage=models.CharField(max_length=250)
     def __str__(self):
@@ -56,6 +55,7 @@ class Post(models.Model):
     price=models.CharField(max_length=260)
     image=models.CharField(max_length=250)
     mainQuantity=models.IntegerField()
+    _id=models.AutoField(primary_key=True,editable=False)
     branchName=models.ForeignKey(PostBranch,related_name="items",on_delete=models.CASCADE)
     def __str__(self):
         return self.name
@@ -73,3 +73,10 @@ class Custom(models.Model):
     user=models.ForeignKey(User,related_name="customs",on_delete=models.CASCADE)
     def __str__(self):
         return self.name
+
+
+
+class EmailCallExist(models.Model):
+    email=models.CharField(max_length=250)
+    def __str__(self):
+        return self.email

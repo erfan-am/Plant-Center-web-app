@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import viewsets
 from .models import Post, PostBranch,Custom, User
-from .serializers import CustomSerialzier, PostSerilizer,PostBranchSerializer,UserSerilizer
+from .serializers import CustomSerialzier, EmailExistSerialzier, PostSerilizer,PostBranchSerializer,UserSerilizer
 from rest_framework.views import APIView
 from rest_framework.permissions import  IsAuthenticated,AllowAny
 from rest_framework.authentication import TokenAuthentication
@@ -19,7 +19,8 @@ class branchView(viewsets.ModelViewSet):
     queryset=PostBranch.objects.all()
     serializer_class=PostBranchSerializer
 
-    
+
+
 class PostVliewList(viewsets.ModelViewSet):
     queryset=Post.objects.all()
     serializer_class=PostSerilizer
@@ -61,7 +62,14 @@ class CustomUserCreate(APIView):
             if newuser:
                 return Response(status=status.HTTP_201_CREATED)
         return Response(req_serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
+        
+class EmailExistCallView(viewsets.ModelViewSet):
+    def post(self,request):
+        print(request.data)
+        email=EmailExistSerialzier(data=request.data)
+        if email.is_valid():
+            email.save()
+            return Response(request.data)
 
 class CustomersOrders(APIView):
     def post(self,request):
@@ -79,4 +87,33 @@ class CustomersOrders(APIView):
        return Response("is ok")
 
 
+
+
+
+class CreatePostAndBranch(APIView):
+    def post(self,req):
+        if PostBranch.objects.get(branchName = req.data['BranchName']):
+            print('its already exist')
+        else:
+            orders=PostBranch.objects.create(
+                branchName=req.data['BranchName'], 
+                branchImage=req.data['BranchImage'])
+            branchNameSerializer=PostBranchSerializer(data=orders,many=True)
+            if branchNameSerializer.is_valid():
+                branchNameSerializer.save()
+                return Response(status=status.HTTP_201_CREATED)
+        post=Post.objects.create(
+            name=req.data['postName'],
+            price=req.data['totalPrice'],
+            mainQuantity=req.data['mainQuantity'],
+            image=req.data['postImage'],
+            branchName=PostBranch.objects.get(branchName=req.data['BranchName'])
+
+        )
+        post_serilizer=PostSerilizer(data=post,many=True)
+        if post_serilizer.is_valid():
+            post_serilizer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        return Response("is ok")
 

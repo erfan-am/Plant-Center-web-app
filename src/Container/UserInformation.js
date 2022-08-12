@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const UserInformation = ({user}) => {
+const UserInformation = ({user,fetchOrders}) => {
+    useEffect(()=>{
+        fetchOrders()
+    },[])
   return (
     <div className="container bootstrap snippets bootdey">
     <div className="panel-body inf-content">

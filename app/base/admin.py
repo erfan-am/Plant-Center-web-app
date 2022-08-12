@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Custom, Post, PostBranch,User
+from .models import Custom, EmailCallExist, Post, PostBranch,User
 from django.contrib.auth.admin import UserAdmin 
 
 class UserAdminConfig(UserAdmin):
@@ -16,3 +16,4 @@ admin.site.register(PostBranch)
 admin.site.register(User,UserAdminConfig)
 admin.site.register(Post)
 admin.site.register(Custom)
+admin.site.register(EmailCallExist)
