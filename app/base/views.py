@@ -4,10 +4,12 @@ from rest_framework import viewsets
 from .models import EmailCallExist, Post, PostBranch,Custom, User
 from .serializers import CustomSerialzier, EmailExistSerialzier, PostSerilizer,PostBranchSerializer,UserSerilizer
 from rest_framework.views import APIView
-from rest_framework.permissions import  IsAuthenticated,AllowAny
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import  AllowAny
 from rest_framework import status
 # Create your views here.
+
+import smtplib
+from email.message import EmailMessage
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -68,6 +70,7 @@ class EmailExistCallView(viewsets.ModelViewSet):
         print(request.data)
         order=EmailCallExist.objects.create(
             email=request.data['email'],
+            name=request.data['username'],
             postName=Post.objects.get(name=request.data['name'])
         )
         email=EmailExistSerialzier(data=order)
@@ -126,3 +129,29 @@ class CreatePostAndBranch(APIView):
 
         return Response("is ok")
 
+
+
+class sendEmail(viewsets.ModelViewSet):
+    def post(self,req):
+        email=EmailCallExist.objects.all().values()
+        for i in email:
+            if i['postName_id'] == req.data['id']:
+                SENDER_ADDRESS='dev.erfan1999@gmail.com'
+                SENDER_PASSWORD='tictcjymwjbbkirn'
+                msg=EmailMessage()
+                msg['Subject']=f"Hi dear {i['name']}"
+                msg['From']=SENDER_ADDRESS
+                msg["TO"]=[
+                   i['email']
+                ]
+                with smtplib.SMTP('smtp.gmail.com',587) as smtp:
+                    smtp.ehlo()
+                    smtp.starttls()
+                    smtp.ehlo()
+                    smtp.login(SENDER_ADDRESS,SENDER_PASSWORD)
+                    if  SENDER_PASSWORD:
+                        smtp.send_message(msg)
+                        print("It was successfull")
+                    else:
+                        print("something get wrong")
+        return Response("is ok")

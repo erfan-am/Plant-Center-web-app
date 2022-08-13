@@ -7,6 +7,7 @@ const AdminHome = ({data }) => {
     const [password,setPassword]=useState('')
     const [branchNew,setbranchNew]=useState('')
     const [postName,setPostName]=useState('')
+    const [id,setId]=useState('')
     const [postquantity,setPostquantity]=useState(null)
     const [off,setOff]=useState(null)
     const [totalPrice,setTotoalPrice]=useState(null)
@@ -50,11 +51,11 @@ const AdminHome = ({data }) => {
     const setModalValue=(item)=>{
         setModlaShow(true)
         setPostName(item.name)
+        setId(item._id)
         setEmails(item.emails)
         setTotoalPrice(item.price)
         setPostquantity(item.mainQuantity)
        }
-    
   return (
         <div className="row">
             <div style={{height:'100vh',width:'30%'}}>
@@ -149,9 +150,10 @@ const AdminHome = ({data }) => {
         flexDirection:'row',
         minHeight:'200px'
     }}>
-        {modalShow && <Modal 
+       <Modal 
         postName={postName}
         emails={emails}
+        id={id}
         setModlaShow={setModlaShow}
         setPostName={setPostName}
         setOff={setOff}
@@ -160,7 +162,7 @@ const AdminHome = ({data }) => {
         postquantity={postquantity}
         off={off}
         totalPrice={totalPrice}        
-         />}
+         />
         {data && data.map(item=>(
           <div className='dropdown'>
            <button className={`btn text-white btn-${colors[Math.floor(Math.random(colors)*colors.length)]}  dropdown-toggle`}  id={item.id} data-bs-toggle="dropdown" aria-expanded="false">
@@ -179,8 +181,6 @@ const AdminHome = ({data }) => {
         ))}
     </div>
     </div>
-
-   
     </div>
   )
 }

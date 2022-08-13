@@ -78,6 +78,7 @@ class Custom(models.Model):
 
 class EmailCallExist(models.Model):
     email=models.CharField(max_length=250)
+    name=models.CharField(max_length=250)
     _id=models.AutoField(primary_key=True,editable=False)
     postName=models.ForeignKey(Post,related_name="emails",on_delete=models.CASCADE)
     def __str__(self):

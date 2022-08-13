@@ -42,7 +42,7 @@ const checkExistEmail=(item)=>{
  return axios({
   method:'post',
   url:'http://127.0.0.1:8000/emailexist/',
-  data:{"email":user.email,"name":item}
+  data:{"email":user.email,"name":item,"username":user.username}
   }).then((res)=>{
     console.log(res.data);
   }).catch(

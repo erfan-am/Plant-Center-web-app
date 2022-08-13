@@ -1,6 +1,21 @@
+import axios from "axios";
 
-const Modal = ({totalPrice,emails,setModlaShow,postName,postquantity,off,setPostName,setPostquantity,setOff,setTotoalPrice}) => {
+const Modal = ({id,totalPrice,emails,setModlaShow,postName,postquantity,off,setPostName,setPostquantity,setOff,setTotoalPrice}) => {
   
+    const sendEmail=()=>{
+        return axios({
+         method:'post',
+         url:'http://127.0.0.1:8000/sendemail/',
+         data:{'id':id}
+         }).then((res)=>{
+           console.log(res.data);
+         }).catch(
+         err=>{
+           console.log(err);
+         })
+       }
+       
+       
   return (
     <div onClick={()=>setModlaShow(false)} className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
@@ -32,22 +47,16 @@ const Modal = ({totalPrice,emails,setModlaShow,postName,postquantity,off,setPost
     <input type="file" className="form-control-file" id="exampleFormControlFile1"/>
     </div>
   </div>
-  <div className="row mt-2">
-    <div className="col">
-    <label for="exampleFormControlTextarea1">Details</label>
-    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea> 
-   </div>
-  </div>
 </form>
       </div>
       <div className="col">
       <h4>Emails who are wwating to order exist</h4>
-      <ul>
+      <ul className="list-group">
         {emails.map(email=>(
-            <li key={email.id}>{email.email}</li>
+            <li className="list-group-item mt-2" key={email.id}>{email.email}</li>
         ))}
       </ul>
-      <button className="btn btn-primary">SEND EMAIL</button>
+      <button onClick={sendEmail} className="btn btn-primary">SEND EMAIL</button>
       </div>
       <div className="modal-footer">
         <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -87,7 +87,7 @@ const validate = values => {
           
         </form>
         <div className="mb-3">
-                <input onClick={handleData} type="submit"className="form-control" value="Sign up" />
+                <input onClick={handleData} type="submit"className="form-control" value="Login" />
             </div>
         <h3>if you haven't any account please click <Link 
         to="/authentication/signup"
