@@ -27,4 +27,3 @@ yarn-error.log*
 
 /app/build
 
-/app/db.sqlite3
