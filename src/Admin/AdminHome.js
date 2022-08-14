@@ -164,13 +164,14 @@ const AdminHome = ({data }) => {
         totalPrice={totalPrice}        
          />
         {data && data.map(item=>(
-          <div className='dropdown'>
+          <div key={Math.random()} className='dropdown'>
            <button className={`btn text-white btn-${colors[Math.floor(Math.random(colors)*colors.length)]}  dropdown-toggle`}  id={item.id} data-bs-toggle="dropdown" aria-expanded="false">
                 {item.branchName}
             </button>
             <div className="dropdown-menu" aria-labelledby={item.id}>
                 {item.items.map(it=>(
                 <span 
+                key={Math.random()}
                 onClick={()=>setModalValue(it)}
                 data-bs-toggle="modal" 
                 data-bs-target="#exampleModal" 

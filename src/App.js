@@ -45,6 +45,7 @@ const checkExistEmail=(item)=>{
   data:{"email":user.email,"name":item,"username":user.username}
   }).then((res)=>{
     console.log(res.data);
+    alert("We will notify you if the item is available")
   }).catch(
   err=>{
     console.log(err);
@@ -91,13 +92,15 @@ useEffect(()=>{
       localStorage.setItem('ddd',JSON.stringify(data))
     }else{
       console.log('wrong');
+      if(params.pathname !== "/adminhome"){
       dispatch(logOut())
+      }
     }
    }
   } 
 
   useEffect(()=>{
-    let twoMin=20000
+    let twoMin=200000
       let interval=setInterval(()=>{
        updateToken()
       },twoMin)
@@ -115,6 +118,9 @@ useEffect(()=>{
   // localStorage.removeItem('choices')
   console.log(localStorage.getItem('choices'));
   const addTools=(item)=>{
+    if(user ===null){
+      navigate('/authentication/login')
+    }
     dispatch(choiceData({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
       image:item.image,quantity:1,id:Math.random(),username:user.username}))
     // localStorage.setItem('choices',JSON.stringify({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
@@ -141,11 +147,9 @@ useEffect(()=>{
     }
   return (
     <div className="">
-      <Routes>
-      <Route path='/adminhome' element={<AdminHome  data={data} />} />
-      </Routes>
     {params.pathname !== "/adminhome" &&  <Navbar user={user} choices={choices} logOut={logOut} />}
       <Routes>
+        <Route path='/adminhome' element={<AdminHome  data={data} />} />
         <Route path='/' element={<Home data={data}/>} />
         <Route path='/shop' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail}  addTools={addTools} />} />
         <Route path='/shop/:name' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail} addTools={addTools} />} />
@@ -153,7 +157,7 @@ useEffect(()=>{
         <Route path='/user/:username' element={<UserInformation fetchOrders={fetchOrders} user={user} />} />
         <Route path='/authentication/signup' element={<Singup />} />
         <Route path='/shop/seeDetails/:name' element={<Details checkExistEmail={checkExistEmail} data={data} addTools={addTools} />} />
-        <Route path='/box' element={<Box onPay={onPay} decQuantity={decQuantity} addQuantity={addQuantity} totalPrices={totalPrices} choices={choices} removeItem={removeItem} />} />
+        <Route path='/box' element={<Box user={user} onPay={onPay} decQuantity={decQuantity} addQuantity={addQuantity} totalPrices={totalPrices} choices={choices} removeItem={removeItem} />} />
       </Routes>
     </div>
   );

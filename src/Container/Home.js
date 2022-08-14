@@ -3,12 +3,13 @@ import {Link} from 'react-router-dom'
 import Carousel from '../Components/Carousel'
 const Home = ({data}) => {
 
-  const  links=["https://www.ikea.com/om/en/images/products/fejka-artificial-potted-plant-in-outdoor-monstera__0614197_pe686822_s5.jpg","https://www.bigw.com.au/medias/sys_master/images/images/ha9/h67/17304762155038.jpg"]
+  const  links=[{slid:"1",img:"https://www.komar.de/en/media/catalog/product/cache/5/image/9df78eab33525d08d6e5fb8d27136e95/l/j/ljx8-060.jpg"},
+{slid:'2',img:"https://static6.depositphotos.com/1031174/597/i/950/depositphotos_5977156-stock-photo-jungle.jpg"},
+{slid:'3',img:"https://cdn.britannica.com/90/3890-050-F451C580/rainforest-coast-lowland-rainforests-Ecuador-tropics-evergreen.jpg"}]
   return (
         <div className='container'>
             <div id="row_titel" className="row p-4">
-            {/* <Carousel links={links} key={Math.random()}/> */}
-                   
+             <Carousel links={links} />
             </div>
             <div id='homeCol'>
                 <h2 className='text-center'>Shop center</h2>

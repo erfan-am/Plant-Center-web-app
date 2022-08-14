@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate,Link } from 'react-router-dom'
+import { useNavigate,Link,useLocation } from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import axios from 'axios'
 import { removeallchoices } from '../redux/posts/PostsReducer'
 
 
-const Box = ({choices,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
+const Box = ({choices,user,removeItem,totalPrices,addQuantity,onPay,decQuantity}) => {
     let i=1
     const navigate=useNavigate()
     const dispatch=useDispatch()
-  
+    const params=useLocation().pathname
+    console.log(params);
 const sendOrders=async()=>{
+  if(user === null){
+    navigate('/authentication/login')
+  }
   await axios({
     method: 'post',
     url: 'http://127.0.0.1:8000/orders/',

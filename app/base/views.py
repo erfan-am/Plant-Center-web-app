@@ -104,9 +104,10 @@ class CustomersOrders(APIView):
 
 class CreatePostAndBranch(APIView):
     def post(self,req):
-        if  PostBranch.objects.get(branchName = req.data['BranchName']):
-            print('its already exist')
-        else:
+        try:
+            if  PostBranch.objects.get(branchName = req.data['BranchName']):
+                print('its already exist')
+        except Exception:
             orders=PostBranch.objects.create(
                 branchName=req.data['BranchName'], 
                 branchImage=req.data['BranchImage'])
@@ -144,6 +145,7 @@ class sendEmail(viewsets.ModelViewSet):
                 msg["TO"]=[
                    i['email']
                 ]
+                msg['BODY']="Your requested product is available"
                 with smtplib.SMTP('smtp.gmail.com',587) as smtp:
                     smtp.ehlo()
                     smtp.starttls()

@@ -9,30 +9,6 @@
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      const menu = document.querySelector(".menu");
-      const pizza = document.querySelector(".pizza_list");
-      const login = document.querySelector(".login");
-
-      document.addEventListener("click", (e) => {
-        if (e.target.matches(".btn_menu")) {
-          menu.classList.toggle("menu--show");
-          pizza.classList.remove("pizza_list--show");
-          login.classList.remove("login--show");
-        }
-        if (e.target.matches(".btn_pizza")) {
-          pizza.classList.toggle("pizza_list--show");
-          menu.classList.remove("menu--show");
-          login.classList.remove("login--show");
-        }
-
-        if (e.target.matches(".btn_login")) {
-          login.classList.toggle("login--show");
-          pizza.classList.remove("pizza_list--show");
-          menu.classList.remove("menu--show");
-        }
-      });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
   </body>
