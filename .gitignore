@@ -24,3 +24,7 @@ yarn-error.log*
 
 
 .vscode
+
+/app/build
+
+/app/db.sqlite3
