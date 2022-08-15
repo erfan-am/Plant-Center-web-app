@@ -19,15 +19,16 @@ const Home = ({data}) => {
             </div>
             <div className="row mt-5 p-5">
                     {data && data.map(item=>(
-                       <div key={Math.random()} className='col'>
+                       <div id="homeCard" key={Math.random()} className='col'>
                             <div className="card" style={{width: "19rem"}}>
                                 <img style={{width:'100%',height:'250px'}} 
                                 className="card-img-top" src={item.branchImage} alt="Card image cap"/>
-                            </div>
-                            <div className="card-body">
-                                <h5 className="card-title">{item.branchName}</h5>
+                            <div className="card-body card-body-home">
+                                <h5 className="card-title text-center">Branch Name: {item.branchName}</h5>
                                 <Link to={`shop/${item.branchName}`} className="btn btn-primary">Go Shop</Link>
                             </div>
+                            </div>
+                           
                         </div>
                     ))}
             </div>

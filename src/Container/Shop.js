@@ -19,9 +19,9 @@ const Shop = ({addTools,data,checkExistEmail,user}) => {
                         <div className="col">
                         <div className='row ff'>
                         {item.items.map(item=>(
-                                <div key={Math.random()} className="card m-3" style={{width: "11rem"}}>
-                                <img style={{width:'100%',height:'180px'}} className="card-img-top" src={item.image} alt="Card image cap"/>
-                                <div className="card-body row">
+                                <div id="shopCard" key={Math.random()} className="card m-3" style={{width: "11rem"}}>
+                                <img  style={{width:'100%',height:'180px'}} className="card-img-top" src={item.image} alt="Card image cap"/>
+                              <div  className="card-body card-body-shop row">
                                <div className="d-flex" style={{justifyContent:'space-around'}}>
                                {item.mainQuantity >0 && <p className="card-title">{item.price}$</p>}
                                 <p className={item.mainQuantity  ===0 ? `card-title text-danger` : 'card-title '}>quantity: {item.mainQuantity}</p>

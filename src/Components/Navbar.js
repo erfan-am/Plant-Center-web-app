@@ -13,9 +13,6 @@ export default function Navbar({choices,user,logOut}) {
             <li className="nav-item h5">
             <Link className="nav-link" to="/shop">Shop</Link>
             </li>
-            <li className="nav-item h5">
-            <Link className="nav-link" to="/about-us">About Us</Link>
-            </li>
         </ul>
         <div className="icons">
             <div className="dropdown mr-5">
