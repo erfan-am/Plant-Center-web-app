@@ -9,6 +9,7 @@ const Modal = ({id,totalPrice,emails,setModlaShow,postName,postquantity,off,setP
          data:{'id':id}
          }).then((res)=>{
            console.log(res.data);
+           alert('Completely Successfull ')
          }).catch(
          err=>{
            console.log(err);

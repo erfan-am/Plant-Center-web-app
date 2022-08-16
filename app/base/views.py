@@ -138,7 +138,7 @@ class sendEmail(viewsets.ModelViewSet):
         for i in email:
             if i['postName_id'] == req.data['id']:
                 SENDER_ADDRESS='dev.erfan1999@gmail.com'
-                SENDER_PASSWORD=''
+                SENDER_PASSWORD='tictcjymwjbbkirn'
                 msg=EmailMessage()
                 msg['Subject']=f"Hi dear {i['name']}"
                 msg['From']=SENDER_ADDRESS

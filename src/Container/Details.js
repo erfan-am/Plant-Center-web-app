@@ -10,7 +10,7 @@ const Details = ({addTools,data}) => {
         <h1>See Details</h1>
         <div className="row">
             <div className="col-lg-6">
-                <img src={item.image} style={{width:'100%',height:'450px'}} alt={item.name+ "w"} />
+              {item.image &&  <img src={item.image} style={{width:'100%',height:'450px'}} alt={item.name+ "w"} />}
             </div>
             <div className="col">
                 <ul className='list-group p-4'>

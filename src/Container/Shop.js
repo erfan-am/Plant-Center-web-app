@@ -6,10 +6,36 @@ const Shop = ({addTools,data,checkExistEmail,user}) => {
   
     
   return (
-    <div className='container'>
-            <div className="col">
-                <h1>Shop Center</h1>
-            </div>
+    <div className=''>
+          <div className="filterAndShop">
+          <div className="filter p-1">
+              <h3>Setting Filter</h3>
+              <ul className="list-group">
+                <li className="list-group-item btn btn-secondary dropdown-toggle" id="dropdwonButtonBranchName" type="button" data-bs-toggle="dropdown" aria-expanded="false">Base on Branch Name
+                <ul class="menuDropdown list-group">
+                <li><a class="list-group-item" href="#">Action</a></li>
+                <li><a class="list-group-item" href="#">Another action</a></li>
+                <li><a class="list-group-item" href="#">Something else here</a></li>
+              </ul>
+                </li>
+                
+                <li id="dropdwonButtonPrcie" className='list-group-item'>Base on Price
+                <ul class="menuDropdownPrice list-group">
+                <li><a class="list-group-item" href="#">Action</a></li>
+                <li><a class="list-group-item" href="#">Another action</a></li>
+                <li><a class="list-group-item" href="#">Something else here</a></li>
+              </ul>
+              </li>
+                <li id="dropdwonButtonQuantity" className='list-group-item'>Base on quantity not 0
+                <ul class="menuDropdownQuantity list-group">
+                <li><a class="list-group-item" href="#">Action</a></li>
+                <li><a class="list-group-item" href="#">Another action</a></li>
+                <li><a class="list-group-item" href="#">Something else here</a></li>
+              </ul></li>
+              </ul>
+          </div>
+
+            <div className="col shopData">
             {
               data &&  data.map(item=>(
                  <Motive  key={Math.random()}>
@@ -38,6 +64,9 @@ const Shop = ({addTools,data,checkExistEmail,user}) => {
                     </Motive>
                 ))
             }
+            </div>
+          
+          </div>
     </div>
   )
 }

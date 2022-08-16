@@ -124,3 +124,29 @@ body {
   width: 100%;
   margin-top: 40%;
 }
+
+.filterAndShop{
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+.filter{
+  padding: 1rem;
+}
+.shopData{
+  overflow-x: scroll;
+  max-height: 100vh;
+}
+.menuDropdown,.menuDropdownQuantity,.menuDropdownPrice{
+  display: none;
+}
+
+#dropdwonButtonBranchName:hover  .menuDropdown{
+  display: block;
+}
+#dropdwonButtonPrcie:hover  .menuDropdownPrice{
+  display: block;
+}
+#dropdwonButtonQuantity:hover  .menuDropdownQuantity{
+  display: block;
+}

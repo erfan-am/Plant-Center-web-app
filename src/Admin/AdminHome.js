@@ -42,6 +42,7 @@ const AdminHome = ({data }) => {
         }
          }).then((res)=>{
            console.log(res.data);
+           alert('Completely Successfull ')
          }).catch(
          err=>{
            console.log(err);
