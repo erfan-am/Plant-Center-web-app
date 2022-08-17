@@ -1,6 +1,9 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import Carousel from '../Components/Carousel'
+import Carousel from '../Components/Carousel';
+import SwiperCaro from '../Components/Swiper';
+import {  SwiperSlide } from 'swiper/react';
+import { Link } from 'react-router-dom';
+
 const Home = ({data}) => {
 
   const  links=[{slid:"1",img:"https://www.komar.de/en/media/catalog/product/cache/5/image/9df78eab33525d08d6e5fb8d27136e95/l/j/ljx8-060.jpg"},
@@ -9,6 +12,7 @@ const Home = ({data}) => {
   return (
         <div className='container'>
             <div id="row_titel" className="row p-4">
+                
              <Carousel links={links} />
             </div>
             <div id='homeCol'>
@@ -18,19 +22,20 @@ const Home = ({data}) => {
                 </div>
             </div>
             <div className="row mt-5 p-5">
-                    {data && data.map(item=>(
-                       <div id="homeCard" key={Math.random()} className='col'>
-                            <div className="card" style={{width: "19rem"}}>
-                                <img style={{width:'100%',height:'250px'}} 
-                                className="card-img-top" src={item.branchImage} alt="Card image cap"/>
-                            <div className="card-body card-body-home">
-                                <h5 className="card-title text-center">Branch Name: {item.branchName}</h5>
-                                <Link to={`shop/${item.branchName}`} className="btn btn-primary">Go Shop</Link>
-                            </div>
-                            </div>
-                           
-                        </div>
+                <SwiperCaro>
+                {data && data.map(item=>(
+            <SwiperSlide id="homeCard" key={Math.random()} className='col'>
+                <div className="card" style={{width: "19rem"}}>
+                    <img style={{width:'100%',height:'250px'}} 
+                    className="card-img-top" src={item.branchImage} alt="Card image cap"/>
+                <div className="card-body card-body-home">
+                    <h5 className="card-title text-center">Branch Name: {item.branchName}</h5>
+                    <Link to={`shop/${item.branchName}`} className="btn btn-primary">Go Shop</Link>
+                </div>
+                </div>
+            </SwiperSlide>
                     ))}
+                </SwiperCaro>
             </div>
         </div>
     )

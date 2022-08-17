@@ -131,22 +131,40 @@ body {
   overflow: hidden;
 }
 .filter{
-  padding: 1rem;
+  width: 250px;
 }
 .shopData{
   overflow-x: scroll;
   max-height: 100vh;
 }
-.menuDropdown,.menuDropdownQuantity,.menuDropdownPrice{
+
+.menuDropdown,.menuDropdownPrice{
+  transform: translateY(100px) ;
+  transition:all 1s ease-in;
+  height: 0px;
+}
+
+.menuDropdown li,.menuDropdownPrice li{
   display: none;
+}
+#dropdwonButtonBranchName:hover .menuDropdown li{
+  display: block;
+}
+#dropdwonButtonPrcie:hover .menuDropdownPrice li{
+  display: block;
 }
 
 #dropdwonButtonBranchName:hover  .menuDropdown{
   display: block;
+  transform: translateY(0px);
+  height:100%;
+
 }
 #dropdwonButtonPrcie:hover  .menuDropdownPrice{
   display: block;
+  transform: translateY(0px);
+  height:100%;
+
 }
-#dropdwonButtonQuantity:hover  .menuDropdownQuantity{
-  display: block;
-}
+
+

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export default function Navbar({choices,user,logOut}) {
  
   return (
-    <nav className="navii">
+    <nav className="navii bg-success text-white">
      {/* <button>open</button> */}
         <ul className="nav_ul">
            <li className="nav-item h5">
