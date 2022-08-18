@@ -1,9 +1,11 @@
 import {createSlice,createAsyncThunk} from '@reduxjs/toolkit';
+import { products } from '../../data';
 const URL="http://127.0.0.1:8000/";
 const initialState={
-    data:null,
+    data:products,
     loading:false,
-    choices:[]
+    choices:[],
+    filterData:null,
 }
 
 export const syncData=createAsyncThunk("PostsReducer/syncData",async()=>{
@@ -31,6 +33,14 @@ const PostsReducer=createSlice({
             choices:[]
         }
       },
+      filterBaseOnName:(state,action)=>{
+        return{
+            ...state,
+            filterData:state.data.filter(item=>item.branchName == action.payload)
+        }
+      },
+      filterBaseOnPrice:(state,action)=>filterPrice(state,action),
+      filterBaseOnQuantity:(state,action)=>filterQuantity(state,action)
     },
     extraReducers:{
         [syncData.pending]:(state)=>{
@@ -47,7 +57,7 @@ const PostsReducer=createSlice({
 })
 
 
-export const {choiceData,removeData,addchoice,decchoice,removeallchoices}=PostsReducer.actions;
+export const {choiceData,filterBaseOnQuantity,filterBaseOnPrice,filterBaseOnName,removeData,addchoice,decchoice,removeallchoices}=PostsReducer.actions;
 export default PostsReducer.reducer;
 
 
@@ -102,4 +112,27 @@ const decchoiceItem=(state,action)=>{
 }
 
 
-   
+
+const filterPrice=(state,action)=>{
+   const dataNew=state.data.map((element) => {
+    return {...element, items: element.items
+        .filter((it) => it.price >= action.payload.from
+         && it.price <= action.payload.to)}
+  })
+   return{
+    ...state,
+    filterData:dataNew.filter(it=>it.items.length !==0)
+   }
+}
+
+
+const filterQuantity=(state,action)=>{
+    const dataNew=state.data.map((element) => {
+     return {...element, items: element.items
+         .filter((it) => it.mainQuantity  > 0)}
+   })
+    return{
+     ...state,
+     filterData:dataNew.filter(it=>it.items.length !==0)
+    }
+ }

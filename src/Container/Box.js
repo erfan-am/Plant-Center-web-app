@@ -12,23 +12,23 @@ const Box = ({choices,user,removeItem,totalPrices,addQuantity,onPay,decQuantity}
     const params=useLocation().pathname
     console.log(params);
 const sendOrders=async()=>{
-  if(user === null){
-    navigate('/authentication/login')
-  }
-  await axios({
-    method: 'post',
-    url: 'http://127.0.0.1:8000/orders/',
-    data:choices
-  }).then(res=>{
-    console.log(res);
-    if(res.status ===200){
+  // if(user === null){
+  //   navigate('/authentication/login')
+  // }
+  // await axios({
+  //   method: 'post',
+  //   url: 'http://127.0.0.1:8000/orders/',
+  //   data:choices
+  // }).then(res=>{
+  //   console.log(res);
+  //   if(res.status ===200){
       navigate('/shop')
       alert("we send Your orders soon")
       dispatch(removeallchoices())
-    }
-  }).catch(err=>{
-    console.log(err);
-  })
+  //   }
+  // }).catch(err=>{
+  //   console.log(err);
+  // })
 }
 
  useEffect(()=>{

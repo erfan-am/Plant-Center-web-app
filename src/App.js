@@ -20,7 +20,7 @@ function App() {
   // const [choices,setTools]=useState([])
   const [totalPrices,setTotalPrice]=useState(0)
   const navigate=useNavigate()
-  const {data,choices}=useSelector(state=>state.posts)
+  const {data,choices,filterData}=useSelector(state=>state.posts)
   const {user,tokens}=useSelector(state=>state.user)
   const dispatch=useDispatch()
   const params=useLocation()
@@ -39,17 +39,17 @@ const fetchOrders=async()=>{
 }
 
 const checkExistEmail=(item)=>{
- return axios({
-  method:'post',
-  url:'http://127.0.0.1:8000/emailexist/',
-  data:{"email":user.email,"name":item,"username":user.username}
-  }).then((res)=>{
-    console.log(res.data);
+//  return axios({
+//   method:'post',
+//   url:'http://127.0.0.1:8000/emailexist/',
+//   data:{"email":user.email,"name":item,"username":'user.username'}
+//   }).then((res)=>{
+//     console.log(res.data);
     alert("We will notify you if the item is available")
-  }).catch(
-  err=>{
-    console.log(err);
-  })
+  // }).catch(
+  // err=>{
+  //   console.log(err);
+  // })
 }
 
 
@@ -63,9 +63,9 @@ useEffect(()=>{
     dispatch(getUserTokenDecode(tokens))
 },[])
 
-useEffect(()=>{
-  dispatch(syncData())
-},[])
+// useEffect(()=>{
+//   dispatch(syncData())
+// },[])
 
 useEffect(()=>{
   setTotalPrice(0)
@@ -118,11 +118,11 @@ useEffect(()=>{
   // localStorage.removeItem('choices')
   console.log(localStorage.getItem('choices'));
   const addTools=(item)=>{
-    if(user ===null){
-      navigate('/authentication/login')
-    }
+    // if(user ===null){
+    //   navigate('/authentication/login')
+    // }
     dispatch(choiceData({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
-      image:item.image,quantity:1,id:Math.random(),username:user.username}))
+      image:item.image,quantity:1,id:Math.random(),username:'user.username'}))
     // localStorage.setItem('choices',JSON.stringify({name:item.name,price:item.price,mainQuantity:item.mainQuantity,
     //     image:item.image,quantity:1,id:Math.random(),username:user.username}))
   }
@@ -143,7 +143,8 @@ useEffect(()=>{
   }
 
   const onPay=()=>{
-    user ? alert(`Ok we send your orders`): navigate("/authentication/login")
+    alert(`Ok we send your orders`)
+    // user ? alert(`Ok we send your orders`): navigate("/authentication/login")
     }
   return (
     <div className="">
@@ -151,8 +152,8 @@ useEffect(()=>{
       <Routes>
         <Route path='/adminhome' element={<AdminHome  data={data} />} />
         <Route path='/' element={<Home data={data}/>} />
-        <Route path='/shop' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail}  addTools={addTools} />} />
-        <Route path='/shop/:name' element={<Shop data={data} user={user} checkExistEmail={checkExistEmail} addTools={addTools} />} />
+        <Route path='/shop' element={<Shop  data={filterData ? filterData : data} dataFilter={data} user={user} checkExistEmail={checkExistEmail}  addTools={addTools} />} />
+        <Route path='/shop/:name' element={<Shop  data={filterData ? filterData : data} user={user} checkExistEmail={checkExistEmail} addTools={addTools} />} />
         <Route path='/authentication/login' element={<Login />} />
         <Route path='/user/:username' element={<UserInformation fetchOrders={fetchOrders} user={user} />} />
         <Route path='/authentication/signup' element={<Singup />} />
